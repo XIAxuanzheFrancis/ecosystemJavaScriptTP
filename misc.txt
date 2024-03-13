@@ -1,0 +1,5 @@
+http://localhost:10200/swagger/
+
+Dans le swagger, ne pas oublier de rajouter le jwt dans le bouton "Authorize"
+
+Utiliser sequilize pour les fonctions de get All

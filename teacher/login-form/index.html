@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    </head>
+    <body>
+        <h1>Login</h1>
+        <div id="root">
+            <form id="login_form">
+                <input id="username" type="input" />
+                <input id="password" type="password" />
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    </body>
+    <script>
+        function login(event) {
+            event.preventDefault()
+            const iUsername = document.getElementById("username");
+            const iPassword = document.getElementById("password");
+            fetch("/api/login", {
+                method: 'POST',
+                body: JSON.stringify({
+                    username: iUsername.value,
+                    password: iPassword.value
+                }),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            }).then((response) => {
+                return response.json()
+            }).then((body) => {
+                window.localStorage.setItem('jwt', body.token);
+                document.location.href = "/home"
+            })
+        }
+        const form = document.getElementById("login_form");
+        form.addEventListener("submit", login);
+
+        window.addEventListener("load", (event) => {
+            if (window.localStorage.getItem("jwt") !== null)  {
+                document.location.href = "/home"
+            }
+        });
+
+    </script>
+</html>
